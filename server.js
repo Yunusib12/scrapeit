@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 //Dependencies
 const
     express = require("express"),
@@ -22,7 +24,7 @@ app
 
 // Configure Mongoose and Start the Server
 
-let MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/scrapeit';
+let MONGODB_URI = process.env.MONGODB_URI || `mongodb://localhost/${process.env.MONGODB_LOCALDBName}`;
 
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
