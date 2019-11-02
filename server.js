@@ -22,9 +22,9 @@ app
 
 // Configure Mongoose and Start the Server
 
-let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapeit";
+let MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/scrapeit';
 
-mongoose.connect('mongodb://localhost/scrapeit', {
+mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
