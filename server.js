@@ -1,48 +1,40 @@
-const express = require("express");
-const path = require("path");
-const logger = require("morgan");
-const mongoose = require("mongoose");
+//Dependencies
+const
+    express = require("express"),
+    path = require("path"),
+    logger = require("morgan"),
+    mongoose = require("mongoose"),
+    exphbs = require("express-handlebars"),
+    router = require("./controllers/routes");
 
 const PORT = process.env.PORT || 8080;
-
 const app = express();
 
-// Serve static content for the app from the "public" directory in the application directory.
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Parse application body as JSON
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-// Set Handlebars.
-const exphbs = require("express-handlebars");
-
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
+app
+    .use(express.static(path.join(__dirname, 'public'))) // Serve static content for the app from the "public" directory in the application directory.
+    .use(express.urlencoded({ extended: true })) // Parse application body as JSON
+    .use(express.json())
+    .engine("handlebars", exphbs({ defaultLayout: "main" })) // Set Handlebars.
+    .set("view engine", "handlebars")
+    .use(logger("dev")) // Use morgan logger for logging requests
+    .use(router); // ROUTES
 
 
-// Use morgan logger for logging requests
-app.use(logger("dev"));
+// Configure Mongoose and Start the Server
 
+let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapeit";
 
-
-// Connect to the Mongo DB
-
-mongoose.connect('mongodb://localhost/my_database', {
+mongoose.connect('mongodb://localhost/scrapeit', {
     useNewUrlParser: true,
     useUnifiedTopology: true
+}).then(() => {
+
+    app.listen(PORT, () => {
+        console.log("App listening on PORT " + PORT);
+    });
+
+}).catch((error) => {
+
+    console.error(error);
 });
 
-
-
-// ROUTES
-const router = require("./controllers/routes");
-
-app.use(router);
-
-
-
-// Start the server
-app.listen(PORT, function () {
-    console.log("App running on port " + PORT + "!");
-});
