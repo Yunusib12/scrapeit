@@ -1,5 +1,20 @@
 $(() => {
 
+    /* Functions
+    ================================== */
+
+    function saveArticle(articleId) {
+
+        $.ajax({
+            method: "PUT",
+            url: "/api/save/article",
+            data: { id: articleId }
+        }).then(() => {
+
+            location.reload();
+        });
+    }
+
     $(".btnHome").on("click", function () {
 
 
@@ -17,8 +32,19 @@ $(() => {
     $(".btnScrape").on("click", function () {
 
 
-        location.href = "/api/scrape";
+        // location.href = "/api/scrape";
 
+
+
+    });
+
+    $(".btnsaveArticle").on("click", function (event) {
+
+        event.preventDefault();
+
+        let article = $(event.currentTarget).attr("data-id");
+
+        console.log(article);
     });
 
 });

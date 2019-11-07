@@ -13,6 +13,12 @@ const ArticleSchema = new Schema({
         type: String,
         required: true
     },
+    //Summary to article
+    summary: {
+        type: String,
+        unique: true,
+        required: true
+    },
     //link to article
     link: {
         type: String,

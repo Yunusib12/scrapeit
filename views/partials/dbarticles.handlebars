@@ -1,0 +1,23 @@
+{{#each dbarticles}}
+
+<div class="card mb-3">
+    <div class="card-header">
+        <a class="" href={{this.link}} target="_blank">{{this.title}}</a>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-3">
+                <img class="img-thumbnail" src={{this.photo}}>
+            </div>
+            <div class="col-7">
+                <p>{{this.summary}}</p>
+                <p>{{this.date}}</p>
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-primary btnsaveArticle" data-id={{this._id}}>Save Article</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{/each}}

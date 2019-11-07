@@ -9,29 +9,13 @@ router.get("/", (req, res) => {
     headlineObject["articles"] = []
 
     db.article
-        .find({})
+        .find({ $and: [{ saved: false }, { deleted: false }] })
         .sort({ date: -1 })
-        .then((found) => {
+        .then((dbarticles) => {
 
-            found.length > 0 ? found.forEach((elem) => {
-
-                let hbsObjet = {
-                    id: elem._id,
-                    headline: elem.headline,
-                    summary: elem.summary,
-                    link: elem.link,
-                    photo: elem.photo,
-                    saved: elem.saved,
-                    notes: elem.notes
-                }
-
-                headlineObject.articles.push(hbsObjet);
-
-                (elem === (found.length - 1)) && res.render("index", hbsObjet)
-            })
-                :
-
-                res.render("index");
+            res.render("index", {
+                dbarticles
+            });
         });
 
 });
