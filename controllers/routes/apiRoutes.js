@@ -30,18 +30,29 @@ router.get("/scrape", (req, res) => {
                 date
             }
 
-            // Adding articles in the articles tables 
-            db.article.create(headlineObject).then((dbArticle) => {
-                // View the added result in the console
-                console.log(dbArticle);
-            }).then((dbArticle) => {
+            // find if the article exist before adding them to the db
+            db.article.find({ title: title }).then((data) => {
 
-                res.json(dbArticle);
+                data.length === 0 ?
 
-            }).catch(function (err) {
-                // If an error occurred, log it
-                console.log(err);
+                    // Adding articles in the articles tables 
+                    db.article.create(headlineObject).then((dbArticle) => {
+                        // View the added result in the console
+                    }).then((dbArticle) => {
+
+                        res.json(dbArticle);
+
+                    }).catch(function (err) {
+                        // If an error occurred, log it
+                        console.log(err);
+                    })
+
+                    : console.log("exist");
+
             });
+
+
+
 
         });
 
@@ -49,19 +60,27 @@ router.get("/scrape", (req, res) => {
         console.log(error);
     });
 
+    res.json(res);
+
 });
 
 router.put("/save/article", (req, res) => {
 
-    const { articleId } = req.body.id;
+    const { id } = req.body;
 
+    console.log(id);
 
+    db.article.findOneAndUpdate(
+        { _id: id },
+        {
+            $set: { saved: true }
+        }
+    ).then(function (result) {
 
+        res.json(result)
+    });
 
 });
-
-
-
 
 
 

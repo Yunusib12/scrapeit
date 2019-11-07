@@ -9,11 +9,24 @@ $(() => {
             method: "PUT",
             url: "/api/save/article",
             data: { id: articleId }
-        }).then(() => {
+        }).then((datas) => {
 
             location.reload();
         });
     }
+
+    function scrapeIt() {
+
+        $.get("/api/scrape")
+            .then((datas) => {
+
+                location.reload();
+            });
+    }
+
+
+    /*
+    ======================================= */
 
     $(".btnHome").on("click", function () {
 
@@ -31,11 +44,8 @@ $(() => {
 
     $(".btnScrape").on("click", function () {
 
-
         // location.href = "/api/scrape";
-
-
-
+        scrapeIt();
     });
 
     $(".btnsaveArticle").on("click", function (event) {
@@ -45,6 +55,8 @@ $(() => {
         let article = $(event.currentTarget).attr("data-id");
 
         console.log(article);
+
+        saveArticle(article);
     });
 
 });
