@@ -4,22 +4,36 @@ const
 
 router.get("/", (req, res) => {
 
-    let headlineObject = {}
-
-    headlineObject["articles"] = []
-
-    db.article
+    db.Article
         .find({ $and: [{ saved: false }, { deleted: false }] })
         .sort({ date: -1 })
-        .then((dbarticles) => {
+        .limit(15)
+        .then((articles) => {
 
             res.render("index", {
-                dbarticles
+                articles
             });
         });
 
 });
 
+router.get("/saved", (req, res) => {
+
+    db.Article
+        .find({ $and: [{ saved: true }, { deleted: false }] })
+        .sort({ date: -1 })
+        .limit(15)
+        .then((articles) => {
+
+            const hbsObject = {
+                articles: articles,
+                saved: true
+            };
+
+            res.render("index", hbsObject);
+        });
+
+});
 
 
 

@@ -1,8 +1,8 @@
 const
     router = require('express').Router(),
     axios = require("axios"),
-    cheerio = require("cheerio")
-db = require('../../models');
+    cheerio = require("cheerio"),
+    db = require('../../models');
 
 
 router.get("/scrape", (req, res) => {
@@ -30,37 +30,18 @@ router.get("/scrape", (req, res) => {
                 date
             }
 
-            // find if the article exist before adding them to the db
-            db.article.find({ title: title }).then((data) => {
+            db.Article.create(headlineObject, function (error) {
 
-                data.length === 0 ?
+                (error) ? console.log("Article already exists: " + headlineObject.title) : console.log("New article: " + headlineObject.title);
 
-                    // Adding articles in the articles tables 
-                    db.article.create(headlineObject).then((dbArticle) => {
-                        // View the added result in the console
-                    }).then((dbArticle) => {
-
-                        res.json(dbArticle);
-
-                    }).catch(function (err) {
-                        // If an error occurred, log it
-                        console.log(err);
-                    })
-
-                    : console.log("exist");
+                (i == ($("article.item").length - 1)) && res.json("scrape complete")
 
             });
-
-
-
-
         });
 
     }).catch(function (error) {
         console.log(error);
     });
-
-    res.json(res);
 
 });
 
@@ -68,9 +49,7 @@ router.put("/save/article", (req, res) => {
 
     const { id } = req.body;
 
-    console.log(id);
-
-    db.article.findOneAndUpdate(
+    db.Article.findOneAndUpdate(
         { _id: id },
         {
             $set: { saved: true }
@@ -82,6 +61,27 @@ router.put("/save/article", (req, res) => {
 
 });
 
+router.put("/delete/article", (req, res) => {
+
+    const { id } = req.body;
+
+    console.log(id);
+
+    db.Article.findOneAndUpdate(
+        { _id: id },
+        {
+            $set: {
+                saved: false,
+                deleted: true,
+                notes: []
+            }
+        }
+    ).then(function (result) {
+
+        res.json(result)
+    });
+
+});
 
 
 

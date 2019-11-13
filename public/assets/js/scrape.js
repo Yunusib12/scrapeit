@@ -15,6 +15,18 @@ $(() => {
         });
     }
 
+    function deleteArticle(articleId) {
+
+        $.ajax({
+            method: "PUT",
+            url: "/api/delete/article",
+            data: { id: articleId }
+        }).then((datas) => {
+
+            location.reload();
+        });
+    }
+
     function scrapeIt() {
 
         $.get("/api/scrape")
@@ -28,17 +40,22 @@ $(() => {
     /*
     ======================================= */
 
-    $(".btnHome").on("click", function () {
+    /* Events
+    ================================== */
+
+    $(".btnHome").on("click", function (event) {
 
 
         location.href = "/";
 
     });
 
-    $(".btnSaved").on("click", function () {
+    $(".btnSaved").on("click", function (event) {
 
+        event.preventDefault();
 
         location.href = "/saved";
+
 
     });
 
@@ -46,17 +63,38 @@ $(() => {
 
         // location.href = "/api/scrape";
         scrapeIt();
+
+        location.href = "/";
     });
 
     $(".btnsaveArticle").on("click", function (event) {
 
         event.preventDefault();
 
-        let article = $(event.currentTarget).attr("data-id");
-
-        console.log(article);
+        const article = $(event.currentTarget).attr("data-id");
 
         saveArticle(article);
+    });
+
+
+    $(".btnDeleteArticle").on("click", function (event) {
+        event.preventDefault();
+
+        const article = $(event.currentTarget).attr("data-id");
+
+        deleteArticle(article);
+    });
+
+
+    $(".btnViewAddNote").on("click", function (event) {
+        // $('.modal').modal();
+
+        event.preventDefault();
+
+        const article = $(event.currentTarget).attr("data-id");
+
+        console.log("view", article);
+
     });
 
 });

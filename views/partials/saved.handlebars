@@ -1,0 +1,60 @@
+{{#each articles}}
+
+<div class="card mb-3">
+    <div class="card-header">
+        <a class="" href={{this.link}} target="_blank">{{this.title}}</a>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-3">
+                <img class="img-thumbnail" src={{this.photo}}>
+            </div>
+            <div class="col-7">
+                <p>{{this.summary}}</p>
+                <p>{{this.date}}</p>
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-danger btnDeleteArticle mb-3" data-id={{this._id}}>Delete
+                    Article</button>
+                <button type="button" class="btn btn-success btnViewAddNote" data-toggle="modal" data-target=".addNote"
+                    data-id={{this._id}}>View / Add Note</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div id="noteModal" class="modal fade addNote" tabindex="-1" role="dialog" aria-labelledby="noteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--title including the id of the current article-->
+                <h4 class="modal-title" id=""><b>Notes:</b></h4>
+                <!--where notes will be displayed-->
+                <div>
+                    <ul id="notesBody">
+
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+
+                    <label for="exampleTextarea">Enter New Note</label>
+                    <!--enter note text-->
+                    <textarea class="form-control" id="notestext" rows="3"></textarea>
+                </div>
+                <div>
+                    <!--enter saved notes here-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button data-id={{_id}} data-dismiss="modal" id="btnSaveNote" class="btn btn-primary savenote">Save
+                    changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{/each}}
