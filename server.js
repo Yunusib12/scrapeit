@@ -29,14 +29,7 @@ let MONGODB_URI = process.env.MONGODB_URI || `mongodb://localhost/${process.env.
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}).then(() => {
-
-    app.listen(PORT, () => {
-        console.log("App listening on PORT " + PORT);
-    });
-
-}).catch((error) => {
-
-    console.error(error);
-});
+})
+    .then(() => app.listen(PORT, () => console.log("App listening on PORT " + PORT)))
+    .catch((error) => console.error(error));
 

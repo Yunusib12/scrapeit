@@ -86,7 +86,7 @@ $(() => {
     });
 
 
-    $(".btnViewAddNote").on("click", function (event) {
+    $(".btnSaveNote").on("click", function (event) {
         // $('.modal').modal();
 
         event.preventDefault();
