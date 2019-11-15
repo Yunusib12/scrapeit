@@ -46,9 +46,11 @@ $(() => {
 
             if (noteChildrenCount === 0) {
 
-                const pNote = $("<h4>").text("No Note available for this article");
+                const divNote = $("<div>").addClass("col-md-12 text-center text-danger");
+                const pNote = $("<h5>").text("No notes for this article yet.");
 
-                $noteList.append(pNote);
+                pNote.appendTo(divNote);
+                divNote.appendTo($noteList);
             }
         });
     }
@@ -74,6 +76,16 @@ $(() => {
             });
     }
 
+    function errorMessage(message, articleId) {
+
+        const divErrorMsg = $(`#divErrorMsg${articleId}`);
+
+        $(`#errorMessage${articleId}`)
+            .text(message)
+            .addClass("text-danger")
+            .appendTo(divErrorMsg);
+
+    }
 
     /*
     ======================================= */
@@ -129,15 +141,27 @@ $(() => {
         event.preventDefault();
 
         const articleId = $(event.currentTarget).attr("data-id");
+        const noteText = $(`#notestext${articleId}`).val().trim();
+        let noteObj = {};
 
-        const noteObj = {
-            id: articleId,
-            text: $(`#notestext${articleId}`).val().trim()
+        if (noteText !== "") {
+
+            noteObj = {
+                id: articleId,
+                text: noteText
+            }
+
+            saveNote(noteObj)
+
+        } else {
+
+            errorMessage("Please write something!", articleId);
         }
 
-        saveNote(noteObj);
 
-        console.log(noteObj);
+
+
+
     });
 
 

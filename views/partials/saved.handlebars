@@ -16,14 +16,72 @@
             <div class="col-2">
                 <button type="button" class="btn btn-danger btnDeleteArticle mb-3" data-id={{this._id}}>Delete
                     Article</button>
+
                 <button type="button" class="btn btn-success btnViewAddNote" data-toggle={{this._id}}
-                    data-target=".addNote" data-id={{this._id}}>View / Add Note</button>
+                    data-target=".addNote" data-id={{this._id}} data-target=".bd-example-modal-xl">View / Add
+                    Note</button>
             </div>
         </div>
     </div>
 </div>
 <!-- Modal -->
-<div id={{this._id}} class="modal fade addNote" tabindex="-1" role="dialog" aria-labelledby="noteModalLabel"
+
+<div id={{this._id}} class="modal fade bd-example-modal-xl show" tabindex="-1" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-modal="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title h4" id="myExtraLargeModalLabel"><b>Notes for:</b> {{this.title}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="noteList{{article._id}}">
+                    {{#if this.note}}
+                    {{#each this.note as | note|}}
+                    <div class="col-md-12" id="note{{note._id}}">
+                        <div class="row">
+                            <div class="col-md-10 mb-2">
+                                <p> {{this.text}}</p>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-danger deleteNote" data-note-id="{{note._id}}"
+                                    data-article-id="{{article._id}}">X</button>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                    {{else}}
+                    <div class="col-md-12 text-center text-danger">
+                        <h5>No notes for this article yet.</h5>
+                    </div>
+
+                    {{/if}}
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="exampleTextarea" class="font-weight-bold">Enter New Note</label>
+                            <!--enter note text-->
+                            <textarea class="form-control" id="notestext{{article._id}}" rows="3"></textarea>
+                            <div id="divErrorMsg{{article._id}}">
+                                <label for="errorMessage" id="errorMessage{{article._id}}"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button data-id={{this._id}} class="btn btn-primary btnSaveNote">Save
+                    changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{!-- <div id={{this._id}} class="modal fade addNote" tabindex="-1" role="dialog" aria-labelledby="noteModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -34,12 +92,13 @@
                 <div id="noteList{{article._id}}">
                     {{#if this.note}}
                     {{#each this.note as | note|}}
-                    <div id="note{{note._id}}">
-                        <p> {{this.text}}</p>
-                        <button type="button" class="btn btn-danger deleteNote" data-note-id="{{note._id}}"
-                            data-article-id="{{article._id}}">X</button>
+                    <div class="panel panel-default" id="note{{note._id}}">
+                        <div class="panel-body">
+                            <p> {{this.text}}</p>
+                            <button type="button" class="btn btn-danger deleteNote" data-note-id="{{note._id}}"
+                                data-article-id="{{article._id}}">X</button>
+                        </div>
                     </div>
-
                     {{/each}}
                     {{else}}
                     <h4>No notes for this article yet.</h4>
@@ -64,6 +123,6 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 {{/each}}
