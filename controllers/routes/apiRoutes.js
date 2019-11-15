@@ -83,6 +83,47 @@ router.put("/delete/article", (req, res) => {
 
 });
 
+router.put("/save/note", (req, res) => {
+
+    const { id, text } = req.body;
+    console.log(req.body);
+    db.Note.create({ text })
+        .then(function (dbNote) {
+
+            return db.Article.findOneAndUpdate({ _id: id }, { $push: { note: dbNote._id } }, { new: true });
+        })
+        .then(function (dbArticle) {
+            // If we were able to successfully update an Article, send it back to the client
+            res.json(dbArticle);
+            console.log("save note");
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
+});
+
+router.delete("/delete/note", (req, res) => {
+
+    const { articleId, noteId } = req.body;
+
+    db.Note.deleteOne({ _id: noteId })
+        .then(() => {
+
+            return db.Article.findByIdAndUpdate(articleId, { $pull: { note: noteId } });
+        })
+        .then(() => {
+
+            res.json({ status: 200 });
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
+
+
+
+});
 
 
 module.exports = router;

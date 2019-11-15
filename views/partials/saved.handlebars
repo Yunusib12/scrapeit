@@ -1,4 +1,4 @@
-{{#each articles}}
+{{#each articles as | article |}}
 
 <div class="card mb-3">
     <div class="card-header">
@@ -16,25 +16,34 @@
             <div class="col-2">
                 <button type="button" class="btn btn-danger btnDeleteArticle mb-3" data-id={{this._id}}>Delete
                     Article</button>
-                <button type="button" class="btn btn-success btnViewAddNote" data-toggle="modal" data-target=".addNote"
-                    data-id={{this._id}}>View / Add Note</button>
+                <button type="button" class="btn btn-success btnViewAddNote" data-toggle={{this._id}}
+                    data-target=".addNote" data-id={{this._id}}>View / Add Note</button>
             </div>
         </div>
     </div>
 </div>
 <!-- Modal -->
-<div id="noteModal" class="modal fade addNote" tabindex="-1" role="dialog" aria-labelledby="noteModalLabel"
+<div id={{this._id}} class="modal fade addNote" tabindex="-1" role="dialog" aria-labelledby="noteModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <!--title including the id of the current article-->
-                <h4 class="modal-title" id=""><b>Notes:</b></h4>
+                <h4 class="modal-title" id=""><b>Notes for:</b>{{this.title}}</h4>
                 <!--where notes will be displayed-->
-                <div>
-                    <ul id="notesBody">
+                <div id="noteList{{article._id}}">
+                    {{#if this.note}}
+                    {{#each this.note as | note|}}
+                    <div id="note{{note._id}}">
+                        <p> {{this.text}}</p>
+                        <button type="button" class="btn btn-danger deleteNote" data-note-id="{{note._id}}"
+                            data-article-id="{{article._id}}">X</button>
+                    </div>
 
-                    </ul>
+                    {{/each}}
+                    {{else}}
+                    <h4>No notes for this article yet.</h4>
+                    {{/if}}
                 </div>
             </div>
             <div class="modal-body">
@@ -42,7 +51,7 @@
 
                     <label for="exampleTextarea">Enter New Note</label>
                     <!--enter note text-->
-                    <textarea class="form-control" id="notestext" rows="3"></textarea>
+                    <textarea class="form-control" id="notestext{{article._id}}" rows="3"></textarea>
                 </div>
                 <div>
                     <!--enter saved notes here-->
@@ -50,7 +59,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button data-id={{this._id}} data-dismiss="modal" id="btnSaveNote" class="btn btn-primary savenote">Save
+                <button data-id={{this._id}} data-dismiss="modal" class="btn btn-primary btnSaveNote">Save
                     changes</button>
             </div>
         </div>

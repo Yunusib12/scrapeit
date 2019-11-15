@@ -47,7 +47,7 @@ const ArticleSchema = new Schema({
         default: Date.now
     },
     // notes is an array of reference ids
-    notes: [{
+    note: [{
         type: Schema.Types.ObjectId,
         ref: "Note",
         required: false

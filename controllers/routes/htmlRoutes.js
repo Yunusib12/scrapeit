@@ -22,7 +22,7 @@ router.get("/saved", (req, res) => {
     db.Article
         .find({ $and: [{ saved: true }, { deleted: false }] })
         .sort({ date: -1 })
-        .limit(15)
+        .populate("note")
         .then((articles) => {
 
             const hbsObject = {

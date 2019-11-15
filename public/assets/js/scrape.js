@@ -27,6 +27,44 @@ $(() => {
         });
     }
 
+    function deleteNote(noteObj) {
+
+        $.ajax({
+            method: "DELETE",
+            url: "/api/delete/note",
+            data: noteObj
+        }).then((datas) => {
+
+            let noteChildrenCount = 0;
+            let $noteList = $(`#noteList${noteObj.articleId}`);
+
+            $(`#note${noteObj.noteId}`).remove();
+
+            $noteList.children().each((index, element) => {
+                noteChildrenCount++;
+            })
+
+            if (noteChildrenCount === 0) {
+
+                const pNote = $("<h4>").text("No Note available for this article");
+
+                $noteList.append(pNote);
+            }
+        });
+    }
+
+    function saveNote(noteObj) {
+
+        $.ajax({
+            method: "PUT",
+            url: "/api/save/note",
+            data: noteObj
+        }).then((datas) => {
+
+            location.reload();
+        });
+    }
+
     function scrapeIt() {
 
         $.get("/api/scrape")
@@ -64,7 +102,7 @@ $(() => {
         // location.href = "/api/scrape";
         scrapeIt();
 
-        location.href = "/";
+
     });
 
     $(".btnsaveArticle").on("click", function (event) {
@@ -87,13 +125,43 @@ $(() => {
 
 
     $(".btnSaveNote").on("click", function (event) {
-        // $('.modal').modal();
 
         event.preventDefault();
 
-        const article = $(event.currentTarget).attr("data-id");
+        const articleId = $(event.currentTarget).attr("data-id");
 
-        console.log("view", article);
+        const noteObj = {
+            id: articleId,
+            text: $(`#notestext${articleId}`).val().trim()
+        }
+
+        saveNote(noteObj);
+
+        console.log(noteObj);
+    });
+
+
+    $(".btnViewAddNote").on("click", function () {
+
+        const modalId = $(this).attr("data-id");
+
+        $(`#${modalId}`).modal('show');
+
+    });
+
+
+    $(".deleteNote").on("click", function () {
+
+        event.preventDefault();
+
+        const noteObj = {
+            noteId: $(this).attr("data-note-id"),
+            articleId: $(this).attr("data-article-id")
+        }
+
+        deleteNote(noteObj);
+
+
 
     });
 
