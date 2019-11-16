@@ -1,3 +1,5 @@
+{{#if articles}}
+
 {{#each articles as | article |}}
 
 <div class="card mb-3">
@@ -81,48 +83,16 @@
         </div>
     </div>
 </div>
-{{!-- <div id={{this._id}} class="modal fade addNote" tabindex="-1" role="dialog" aria-labelledby="noteModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <!--title including the id of the current article-->
-                <h4 class="modal-title" id=""><b>Notes for:</b>{{this.title}}</h4>
-                <!--where notes will be displayed-->
-                <div id="noteList{{article._id}}">
-                    {{#if this.note}}
-                    {{#each this.note as | note|}}
-                    <div class="panel panel-default" id="note{{note._id}}">
-                        <div class="panel-body">
-                            <p> {{this.text}}</p>
-                            <button type="button" class="btn btn-danger deleteNote" data-note-id="{{note._id}}"
-                                data-article-id="{{article._id}}">X</button>
-                        </div>
-                    </div>
-                    {{/each}}
-                    {{else}}
-                    <h4>No notes for this article yet.</h4>
-                    {{/if}}
-                </div>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-
-                    <label for="exampleTextarea">Enter New Note</label>
-                    <!--enter note text-->
-                    <textarea class="form-control" id="notestext{{article._id}}" rows="3"></textarea>
-                </div>
-                <div>
-                    <!--enter saved notes here-->
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button data-id={{this._id}} data-dismiss="modal" class="btn btn-primary btnSaveNote">Save
-                    changes</button>
-            </div>
-        </div>
-    </div>
-</div> --}}
-
 {{/each}}
+
+{{else}}
+
+<div class="articles">
+    <br />
+    <br />
+    <div class='alert alert-warning text-center'>
+        <h4>Sorry. Looks like we don't have any saved articles. Save some and come back.</h4>
+    </div>
+</div>
+
+{{/if}}

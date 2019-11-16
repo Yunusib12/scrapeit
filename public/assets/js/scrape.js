@@ -72,7 +72,8 @@ $(() => {
         $.get("/api/scrape")
             .then((datas) => {
 
-                location.reload();
+                console.log(datas);
+                // location.reload();
             });
     }
 
@@ -111,7 +112,6 @@ $(() => {
 
     $(".btnScrape").on("click", function () {
 
-        // location.href = "/api/scrape";
         scrapeIt();
 
 

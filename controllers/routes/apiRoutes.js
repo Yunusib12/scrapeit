@@ -32,7 +32,7 @@ router.get("/scrape", (req, res) => {
 
             db.Article.create(headlineObject, function (error) {
 
-                (error) ? console.log("Article already exists: " + headlineObject.title) : console.log("New article: " + headlineObject.title);
+                (error) ? console.log(`Article already exists: ${headlineObject.title}`) : console.log(`New article: ${headlineObject.title}`);
 
                 (i == ($("article.item").length - 1)) && res.json("scrape complete")
 
