@@ -2,7 +2,7 @@ const
     router = require('express').Router(),
     axios = require("axios"),
     cheerio = require("cheerio"),
-    db = require('../../models');
+    db = require('../models');
 
 
 router.get("/scrape", (req, res) => {

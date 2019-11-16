@@ -1,6 +1,6 @@
 const
     router = require('express').Router(),
-    db = require("../../models");
+    db = require("../models");
 
 router.get("/", (req, res) => {
 

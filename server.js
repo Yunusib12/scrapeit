@@ -7,7 +7,7 @@ const
     logger = require("morgan"),
     mongoose = require("mongoose"),
     exphbs = require("express-handlebars"),
-    router = require("./controllers/routes");
+    router = require("./routes");
 
 const PORT = process.env.PORT || 8080;
 const app = express();
