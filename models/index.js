@@ -1,6 +1,6 @@
 // Exporting an object containing all of our models
-const Note = require("./Note.js/index.js.js");
-const Article = require("./Article.js/index.js.js");
+const Note = require("./Note");
+const Article = require("./Article");
 
 
 module.exports = {
