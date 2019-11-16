@@ -23,7 +23,8 @@ app.use(express.static(path.join(__dirname, 'public'))) // Serve static content 
 
 // Configure Mongoose and Start the Server
 
-let MONGODB_URI = process.env.MONGODB_URI || `mongodb://localhost/${process.env.MONGODB_LOCALDBName}`;
+let MONGODB_URI = process.env.MONGODB_URI;
+// || `mongodb://localhost/${process.env.MONGODB_LOCALDBName}`;
 
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
