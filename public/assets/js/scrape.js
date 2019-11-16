@@ -72,8 +72,7 @@ $(() => {
         $.get("/api/scrape")
             .then((datas) => {
 
-                console.log(datas);
-                // location.reload();
+                location.reload();
             });
     }
 
