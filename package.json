@@ -27,7 +27,7 @@
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.9.1",
     "path": "^0.12.7",
-    "minimist": ">=1.2.3"
+    "minimist": ">=1.2.6"
   },
   "engines": {
     "node": "12.x"
